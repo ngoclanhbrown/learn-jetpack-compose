@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +17,7 @@ import com.brown.compose.basics.ui.theme.ComposeBasicsTheme
 
 @Composable
 fun OnboardScreen(onContinueClick: () -> Unit) {
-    Surface(color = MaterialTheme.colors.background) {
+    Surface {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
