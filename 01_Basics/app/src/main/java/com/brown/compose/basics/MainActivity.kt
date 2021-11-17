@@ -4,17 +4,10 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.brown.compose.basics.screen.GreetingScreen
+import com.brown.compose.basics.screen.OnboardScreen
 import com.brown.compose.basics.ui.theme.ComposeBasicsTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,39 +25,13 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MyApp(names: List<String> = listOf("World", "Compose")) {
-    Surface(color = MaterialTheme.colors.background) {
-        Column(modifier = Modifier.padding(vertical = 4.dp)) {
-            names.forEach { name ->
-                Greeting(name = name)
-            }
-        }
-    }
-}
+fun MyApp() {
+    var showOnboardScreen by remember { mutableStateOf(true) }
 
-
-@Composable
-fun Greeting(name: String) {
-    var expanded by remember { mutableStateOf(false) }
-    val extraPadding = if (expanded) 48.dp else 0.dp
-
-    Surface(
-        color = MaterialTheme.colors.primary,
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
-    ) {
-        Row(modifier = Modifier.padding(24.dp)) {
-            Column(
-                modifier = Modifier
-                    .weight(1F)
-                    .padding(bottom = extraPadding)
-            ) {
-                Text(text = "Hello,")
-                Text(text = name)
-            }
-            OutlinedButton(onClick = { expanded = !expanded }) {
-                Text(text = if (expanded) "Show less" else "Show more")
-            }
-        }
+    if (showOnboardScreen) {
+        OnboardScreen(onContinueClick = { showOnboardScreen = !showOnboardScreen })
+    } else {
+        GreetingScreen()
     }
 }
 
@@ -75,15 +42,5 @@ fun Greeting(name: String) {
 fun PreviewMyApp() {
     ComposeBasicsTheme {
         MyApp()
-    }
-}
-
-
-@Preview(showBackground = true)
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Composable
-fun PreviewGreeting() {
-    ComposeBasicsTheme {
-        Greeting("Android")
     }
 }
