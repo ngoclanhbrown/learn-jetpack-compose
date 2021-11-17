@@ -1,15 +1,19 @@
 package com.brown.compose.basics.screen
 
 import android.content.res.Configuration
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +28,8 @@ import com.brown.compose.basics.ui.theme.ComposeBasicsTheme
 @Composable
 fun GreetingScreen(names: List<String> = List(100) { "$it" }) {
     Surface(color = MaterialTheme.colors.background) {
-        LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
-            items(names) { name ->
+        LazyColumn(contentPadding = PaddingValues(vertical = 4.dp)) {
+            items(names, key = { it }) { name ->
                 Greeting(name = name)
             }
         }
@@ -36,17 +40,23 @@ fun GreetingScreen(names: List<String> = List(100) { "$it" }) {
 @Composable
 fun Greeting(name: String) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val extraPadding = if (expanded) 48.dp else 0.dp
 
-    Surface(
-        color = MaterialTheme.colors.primary,
+    Card(
+        backgroundColor = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Row(modifier = Modifier.padding(24.dp)) {
+        Row(
+            modifier = Modifier
+                .padding(24.dp)
+                .animateContentSize(
+                    animationSpec = spring(
+                        dampingRatio = Spring.DampingRatioMediumBouncy,
+                        stiffness = Spring.StiffnessLow
+                    )
+                )
+        ) {
             Column(
-                modifier = Modifier
-                    .weight(1F)
-                    .padding(bottom = extraPadding)
+                modifier = Modifier.weight(1F)
             ) {
                 Text(text = "Hello,")
                 Text(
@@ -55,9 +65,18 @@ fun Greeting(name: String) {
                         fontWeight = FontWeight.ExtraBold
                     )
                 )
+                if (expanded) {
+                    Text(
+                        text = ("Composem ipsum color sit lazy, " +
+                                "padding theme elit, sed do bouncy. ").repeat(4),
+                    )
+                }
             }
-            OutlinedButton(onClick = { expanded = !expanded }) {
-                Text(text = if (expanded) "Show less" else "Show more")
+            IconButton(onClick = { expanded = !expanded }) {
+                Icon(
+                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+                    contentDescription = null
+                )
             }
         }
     }
