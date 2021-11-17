@@ -4,7 +4,11 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.brown.compose.basics.screen.GreetingScreen
 import com.brown.compose.basics.screen.OnboardScreen
@@ -26,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    var showOnboardScreen by remember { mutableStateOf(true) }
+    var showOnboardScreen by rememberSaveable { mutableStateOf(true) }
 
     if (showOnboardScreen) {
         OnboardScreen(onContinueClick = { showOnboardScreen = !showOnboardScreen })
