@@ -4,6 +4,8 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
@@ -15,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import com.brown.compose.basics.ui.theme.ComposeBasicsTheme
 
 @Composable
-fun GreetingScreen(names: List<String> = listOf("World", "Compose")) {
+fun GreetingScreen(names: List<String> = List(100) { "$it" }) {
     Surface(color = MaterialTheme.colors.background) {
-        Column(modifier = Modifier.padding(vertical = 4.dp)) {
-            names.forEach { name ->
+        LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
+            items(names) { name ->
                 Greeting(name = name)
             }
         }
