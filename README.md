@@ -31,6 +31,18 @@ Terminology
     }
     ```
 
+* State:
+
+    To add internal state to a composable, you can use the `mutableStateOf` function, which makes Compose recompose functions that read that `State`. To preserve state across recompositions, remember the mutable state using `remember`.
+
+    The composable function will automatically be "subscribed" to the state. If the state changes, composables that read these fields will be recomposed to display the updates.
+
+* State Hoisting:
+
+    In Composable functions, state that is read or modified by multiple functions should live in a common ancestor—this process is called **state hoisting**. To *hoist* means to *lift* or *elevate*.
+
+    Making state hoistable avoids duplicating state and introducing bugs, helps reuse composables, and makes composables substantially easier to test. Contrarily, state that doesn't need to be controlled by a composable's parent should not be hoisted. The **source of truth** belongs to whoever creates and controls that state.
+
 Useful Composables
 ------------------
 
