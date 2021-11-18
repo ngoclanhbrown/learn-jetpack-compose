@@ -61,3 +61,4 @@ Useful Modifier
 * `border`
 * `clickable`
 * `animateContentSize`
+* `wrapContentWidth`, `wrapContentHeight`, `wrapContentSize`
