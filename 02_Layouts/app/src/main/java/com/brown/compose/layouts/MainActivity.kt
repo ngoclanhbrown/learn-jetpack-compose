@@ -5,13 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -28,9 +27,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeLayoutsTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    PhotographerCard()
+                    ScaffoldApp()
                 }
             }
         }
@@ -40,9 +38,45 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun PhotographerCard() {
+fun ScaffoldApp() {
+    Scaffold(
+        topBar = { AppBar() }
+    ) { innerPadding ->
+        AppBody(modifier = Modifier.padding(innerPadding))
+    }
+}
+
+
+@Composable
+fun AppBar() {
+    TopAppBar(
+        title = {
+            Text(text = "Compose Layouts")
+        },
+        actions = {
+            IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = null
+                )
+            }
+        }
+    )
+}
+
+
+@Composable
+fun AppBody(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
+        PhotographerCard(modifier = Modifier.align(Alignment.Center))
+    }
+}
+
+
+@Composable
+fun PhotographerCard(modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(8.dp)
             .clip(RoundedCornerShape(4.dp))
             .background(MaterialTheme.colors.surface)
